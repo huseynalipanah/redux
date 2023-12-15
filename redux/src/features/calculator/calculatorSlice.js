@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit'
 export const calculatorSlice = createSlice({
   name: 'calculator',
   initialState: {
-    value: 0
+    value: 0,
+    errorMessage: ''
   },
   reducers: {
     sumNum: (state, action) => {
@@ -13,7 +14,11 @@ export const calculatorSlice = createSlice({
         state.value = +action.payload[0] - +action.payload[1]
       },
       divide: (state, action) => {
-        state.value = +action.payload[0] / +action.payload[1]
+        if (action.payload[1] !== 0) {
+          state.value = +action.payload[0] / +action.payload[1]
+        } else {
+          state.value = state.errorMessage = "0'a bölme hatası";
+        }
       },
       multiply: (state, action) => {
         state.value = +action.payload[0] * +action.payload[1]
